@@ -18,12 +18,12 @@ class Hangman(object):
 
 
     def guess(self, char):
-        guesses = []
-        if self.remaining_guesses < 0:
-            raise ValueError()
-        if char in self.word:
-            guesses.append(char)
-            self.masked = ''.join([char if l == char else l for l in self.word])
+        if self.remaining_guesses < 0 or self.status == STATUS_WIN:
+            raise ValueError("Out of guesses")
+        if char in self.word and char not in self.masked:
+            for i in range(len(self.word)):
+                if self.word[i] == char:
+                    self.masked = ''.join((self.masked[:i],char,self.masked[i+1:]))
         else:
             self.remaining_guesses -= 1
         self.status = self.get_status()
@@ -34,10 +34,10 @@ class Hangman(object):
 
 
     def get_status(self):
-        if self.remaining_guesses > 0:
-            return STATUS_ONGOING
         if self.word == self.masked:
             return STATUS_WIN
+        if self.remaining_guesses > 0:
+            return STATUS_ONGOING
         else:
             return STATUS_LOSE
         
