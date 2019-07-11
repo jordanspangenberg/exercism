@@ -1,19 +1,16 @@
 class Matrix(object):
     def __init__(self, matrix_string):
-        self.matrix = self.parseMatrix(matrix_string)
+        self.matrix = [[int(i) for i in line.split(' ')] for line in matrix_string.splitlines()]
 
     def row(self, index):
         if index > len(self.matrix):
-            raise ValueError('Index Error: {index} is out of bounds')
+            raise IndexError()
         return self.matrix[index-1]
 
     def column(self, index):
         if index > len(self.matrix[index-1]):
-            raise ValueError('Index Error: {index} is out of bounds')
+            raise IndexError()
         return [m[index-1] for m in self.matrix]
 
-    def parseMatrix(self, str):
-        lines = str.split('\n')
-        return [[int(i) for i in s.split(' ')] for s in lines]
 
 

@@ -27,3 +27,24 @@ class SgfTree(object):
 
 def parse(input_string):
     pass
+    
+
+
+def removeOuterParentheses(S: str) -> str:
+    openParen = 0
+    openIndex = int
+    result = ''
+    for i, c in enumerate(S):
+        if c == '(':
+            openParen += 1
+            if openParen == 1:
+                openIndex = i
+        if c == ')':
+            openParen -= 1
+        if openParen == 0:
+            result = result +  S[openIndex+1:i]
+    return result
+            
+print('result: ' + removeOuterParentheses(S="(()())(())"))
+
+
